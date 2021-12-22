@@ -47,7 +47,7 @@ class PasswordWindow:
 
     def getpw2(self, event):
         self.getpw()
-        #self.master.destroy()
+        self.master.destroy()
 
     def getpw(self):
         text = self.e1.get()
