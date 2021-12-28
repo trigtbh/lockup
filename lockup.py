@@ -15,11 +15,8 @@ encryption_key = "change/me/to/whatever/you/want"
 
 
 root = tkinter.Tk()
-<<<<<<< HEAD
-=======
 #root.withdraw()
 
->>>>>>> 844b08bf0d63c4bf75608251e06733c63d43218c
 class PasswordWindow:
     def __init__(self, ransom=False):
 
