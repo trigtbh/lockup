@@ -15,8 +15,6 @@ encryption_key = "change/me/to/whatever/you/want"
 
 
 root = tkinter.Tk()
-root.withdraw()
-
 class PasswordWindow:
     def __init__(self, ransom=False):
 
@@ -123,6 +121,9 @@ def exit4(command):
         shutil.rmtree(os.path.dirname(os.path.realpath(executable)))
 
 if len(sys.argv) == 2:
+    
+    
+
     params = json.loads(decrypt(sys.argv[1]))
     try:
         exitfunc = eval("exit" + params["exit"])
@@ -130,7 +131,10 @@ if len(sys.argv) == 2:
         raise AssertionError
     win = PasswordWindow(ransom=params["ransom"])
     if hashlib.sha256(win.password.encode("utf-8")).hexdigest() == params["password"]:
-        subprocess.run(params["command"])
+        try:
+            subprocess.run(params["command"])
+        except FileNotFoundError:
+            os.system(params["command"])
     else:
         if params["exit"] == "4":
             exitfunc(params["command"])
@@ -140,6 +144,7 @@ if len(sys.argv) == 2:
             exitfunc()
 
 elif len(sys.argv) == 1:
+    root.withdraw()
     params = {}
     clear()
     params["command"] = input("Enter the command you want to lock: ")
@@ -171,3 +176,5 @@ elif len(sys.argv) == 1:
                 params["trail"] = input("Fake command to run upon failure: ")
             clear()
             print(encrypt(json.dumps(params)))
+            print()
+            input("Press enter to continue. ")
