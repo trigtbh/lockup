@@ -1,5 +1,5 @@
 # Lock-Up
-## Extremely simple password protection for running programs
+## Basic password protection for running programs
 
 This program adds (or attempts to add) an extra layer of security to prevent unwanted people from running programs on your computer
 
